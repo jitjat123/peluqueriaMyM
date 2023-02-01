@@ -1,0 +1,35 @@
+{% extends "peluqueriamimapp/base.html" %}
+
+{% load static %}
+{% block content %} 
+    <div style="text-align: center; color: white;margin: 20px auto">
+
+        <span class="section-heading-upper"> <h1>Si tienes alguna inquietud no dudes en contactarnos</h1></span>
+
+    </div>
+
+
+<div class="ContenedorFormulario">   
+    <form action="" method="POST" style="text-align: center;">
+        {% csrf_token %}
+        <table style="color: white; margin: 20px auto"> {{formulario}} </table>
+        <input type="submit" value="Enviar"style="width:150px;">  
+    </form>
+<div style="text-align: center; color: white;margin: 20px auto">
+    {% if "valido" in request.GET %}
+
+        <p> se a enviado la informacion correctamente</p>
+
+    {% endif %}
+
+    {% if "invalido" in request.GET %}
+
+        <p> Ha ocurrido un error intentalo de nuevo</p>
+
+    {% endif %}
+</div>
+
+</div>
+
+
+{% endblock %}

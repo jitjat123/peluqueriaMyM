@@ -1,0 +1,41 @@
+{% extends "peluqueriamimapp/base.html" %}
+
+
+{% load static %}
+{% block content %}
+
+    <div class="container">
+        <div style="float: right;">
+            {%include "carro/widget.html"%}
+        </div>
+
+
+    <div class="row">
+    {% for producto in productos %}
+    <div class="col-md-3">
+            <div class="card text-white bg-secondary mb-3" style="width: 100%; margin: 5px 5px;">
+
+              <img src="{{producto.imagen.url}}" height="300px" class="card-img-top" alt="">
+             <div class="card-body">
+                           <h2 class="card-title" style="text-align: center;"><strong>{{producto.nombre}}</strong></h2>
+                       <h5> <p class="card-text"><strong>Precio: $ </strong>{{producto.precio}}</p></h5>
+   
+                </div>
+
+                <div class="card-footer text-center">
+                    {% if request.user.is_authenticated %}
+                    <a href="{% url 'carro:agregar' producto.id %}" class="btn btn-success">Agregar al  carro</a>
+                    {% else %}
+                    <span href="#" class="btn btn-warning">Agregar al  carro</span>
+                    {% endif %}
+                </div>
+            </div>
+    </div>
+
+    {% endfor %}
+
+</div>
+</div>
+
+
+{% endblock %}

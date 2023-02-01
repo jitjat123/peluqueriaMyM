@@ -1,0 +1,89 @@
+{% extends "peluqueriamimapp/base.html" %}
+
+{% load static %}
+{% block content %}
+
+{% if request.user.is_authenticated %}
+<br/>
+<div class="container">
+    <div style="float: right;">
+    <table class="table table-bordered" id="finalizar_compra" style="color: white;">
+        <thead>
+            <tr>
+                <td colspan="2">total : {{importe_total_carro}}</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td colspan="2"><a class="btn btn-success" href="{% url 'procesar_pedido' %}">Finalizar compra</a></td>
+            </tr>
+
+        </tbody>
+    </table>
+</div>
+</div>
+
+
+
+<div class="container">
+    <table class="table" id="carrito_compras" style="color: white;">
+        <thead>
+            <tr>
+                <td><h4>Tus productos</h4></td>
+                <td>Precio</td>
+                <td>Cantidad</td>
+                <td>Subtotal</td>
+            </tr>
+        </thead>
+        <tbody>
+            {%if request.session.carro.items %}
+            {%for key, value in request.session.carro.items%}
+                <tr>
+                    <td>
+                        <img src="{{value.imagen}}" width="200px" height="200px">
+                            <h5><strong>{{value.nombre}}</strong></h5>
+                    </td>
+                    <td>{{value.costo}}</td>
+                    <td>
+                        
+                            <a class="btn btn-primary dropdown-toggle" id="navbarDropdown1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              <h5>{{value.cantidad}}</h5></a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown1">
+                            <a class="dropdown-item tex-center" href="{% url 'carro:actualizar' value.producto_id  1 %}">1</a>
+                            <a class="dropdown-item tex-center" href="{% url 'carro:actualizar' value.producto_id  2 %}">2</a>
+                            <a class="dropdown-item tex-center" href="{% url 'carro:actualizar' value.producto_id  3 %}">3</a>
+                            <a class="dropdown-item tex-center" href="{% url 'carro:actualizar' value.producto_id  4 %}">4</a>
+                            <a class="dropdown-item tex-center" href="{% url 'carro:actualizar' value.producto_id  5 %}">5</a>
+                            <a class="dropdown-item tex-center" href="{% url 'carro:actualizar' value.producto_id  6 %}">6</a>
+                            
+                        </div>
+
+                    </td>
+                    <td>
+                        $ {{value.precio}}
+                    </td>
+                    
+                </tr>               
+            {% endfor %}
+            {% endif %}
+
+
+        </tbody>
+    </table>
+</div>
+
+{% else %}
+<br/>
+<div class="alert alert-success container" role="alert">
+  <h4 class="alert-heading"><strong>Inicia Sesion</strong></h4>
+  <p>Debes iniciar sesion para poder agregar productos al carro</p>
+  <hr>
+  <p class="mb-0">Regresar al Inicio: <a type="button" class="btn btn-info btn-sm" href="{% url 'Inicio' %}"><strong>Inicio</strong></a></p>
+</div>
+
+
+
+{% endif %}
+
+
+{% endblock %}
